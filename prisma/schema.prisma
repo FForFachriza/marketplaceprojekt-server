@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator docs {
+  provider = "node node_modules/prisma-docs-generator"
+} 
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
+}
+
+model Users {
+  id             Int       @id @unique @default(autoincrement())
+  users_uuid     String?   @unique @default(uuid())
+  users_name     String    @unique
+  users_password String
+  users_role     ROLE      @default(USER)
+  created_at     DateTime? @default(now())
+  updated_at     DateTime? @default(now()) @updatedAt
+
+  @@map("users")
+}
+
+model Products {
+  id                 Int        @id @unique @default(autoincrement())
+  products_uuid      String?    @unique @default(uuid())
+  products_name      String
+  products_desc      String
+  products_price     Int
+  products_image     String
+  product_categories Categories @relation(fields: [categoriesId], references: [id])
+  categoriesId       Int
+  created_at         DateTime?  @default(now())
+  updated_at         DateTime?  @default(now()) @updatedAt
+
+  @@map("products")
+}
+
+model Categories {
+  id              Int        @id @unique @default(autoincrement())
+  categories_uuid String?    @unique @default(uuid())
+  categories_name String
+  created_at      DateTime?  @default(now())
+  updated_at      DateTime?  @default(now()) @updatedAt
+  Products        Products[]
+
+  @@map("categories")
+}
+
+enum ROLE {
+  ADMIN
+  USER
+}
