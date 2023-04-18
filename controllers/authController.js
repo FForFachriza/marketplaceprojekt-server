@@ -19,8 +19,21 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: "Password is not valid" });
     }
     req.session.userId = user.id;
-    return res.status(200).json({ message: "Login success" });
+    return res.status(200).json({ message: "Login success", data: {
+        username: user.users_name,
+        role: user.users_role,
+    } });
   } catch (error) {
     res.status(500).json({ message: "error", error: error.message });
   }
+};
+
+export const logout = async (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ message: "error", error: err.message });
+    }
+    res.clearCookie("connect.sid");
+    res.status(200).json({ message: "Logout success" });
+  });
 };
