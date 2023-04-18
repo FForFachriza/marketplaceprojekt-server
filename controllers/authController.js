@@ -18,7 +18,8 @@ export const login = async (req, res) => {
     if (!passwordValid) {
       return res.status(401).json({ message: "Password is not valid" });
     }
-    req.session.userId = user.id;
+    req.session.userId = user.users_uuid;
+    console.log( req.session)
     return res.status(200).json({ message: "Login success", data: {
         username: user.users_name,
         role: user.users_role,

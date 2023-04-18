@@ -23,9 +23,10 @@ app.use(
   expressSession({
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000, // ms
+      secure: "auto",
     },
     secret: process.env.SESSION_SECRET,
-    resave: true,
+    resave: false,
     saveUninitialized: true,
     store: new PrismaSessionStore(new PrismaClient(), {
       checkPeriod: 2 * 60 * 1000, //ms
@@ -43,10 +44,10 @@ app.use(
 );
 
 // router
+app.use(authRouter);
 app.use(productsRouter);
 app.use(categoriesRouter);
 app.use(usersRouter);
-app.use(authRouter);
 // listening
 
 app.listen(process.env.APP_PORT, () => {
