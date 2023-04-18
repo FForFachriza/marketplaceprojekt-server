@@ -1,12 +1,15 @@
 ### Prisma with Express.js and session in Database + Middleware
+----------
 
 This is a simple example of how to use Prisma with Express.js and store session in database.
 
 #### Notes
+----------
 
 Still in development, the files / folders can be changed.
 
 ##### File Structure
+----------
 
 ```bash
 .
