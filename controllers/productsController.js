@@ -7,6 +7,7 @@ export const getProduct = async (req, res) => {
     const products = await prisma.products.findMany({
       include: {
         product_categories: true,
+        product_status: true,
       },
     });
     res.status(200).json({ message: "success", data: products });
@@ -21,6 +22,7 @@ export const getProductById = async (req, res) => {
     const products = await prisma.products.findUnique({
       where: {
         products_uuid: products_uuid,
+        product_status: true,
       },
     });
     if (!products) {

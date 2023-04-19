@@ -8,6 +8,7 @@ import productsRouter from "./routes/productsRoute.js";
 import categoriesRouter from "./routes/categoriesRoute.js";
 import usersRouter from "./routes/usersRoute.js";
 import authRouter from "./routes/authRoute.js";
+import statusRouter from "./routes/statusRoute.js"
 
 const app = express();
 
@@ -48,6 +49,7 @@ app.use(authRouter);
 app.use(productsRouter);
 app.use(categoriesRouter);
 app.use(usersRouter);
+app.use(statusRouter)
 // listening
 
 app.listen(process.env.APP_PORT, () => {

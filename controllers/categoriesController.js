@@ -91,5 +91,7 @@ export const editCategories = async (req, res) => {
       return res.status(500).json({ message: "Categories Not Found" });
     }
     res.status(200).json({ message: "Berhasil Edit Category", data: categories });
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).json({ message: "error", error: error.message });
+  }
 };

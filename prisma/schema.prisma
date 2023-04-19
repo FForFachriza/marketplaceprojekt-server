@@ -7,7 +7,7 @@ generator client {
 
 generator docs {
   provider = "node node_modules/prisma-docs-generator"
-} 
+}
 
 datasource db {
   provider = "mysql"
@@ -41,9 +41,11 @@ model Products {
   products_price     Int
   products_image     String
   product_categories Categories @relation(fields: [categoriesId], references: [id])
+  product_status     Status     @relation(fields: [statusId], references: [id])
   categoriesId       Int
   created_at         DateTime?  @default(now())
   updated_at         DateTime?  @default(now()) @updatedAt
+  statusId           Int
 
   @@map("products")
 }
@@ -57,6 +59,17 @@ model Categories {
   Products        Products[]
 
   @@map("categories")
+}
+
+model Status {
+  id          Int        @id @unique @default(autoincrement())
+  status_uuid String?    @unique @default(uuid())
+  status_name String   @unique
+  created_at  DateTime?  @default(now())
+  updated_at  DateTime?  @default(now()) @updatedAt
+  Products    Products[]
+
+  @@map("status")
 }
 
 enum ROLE {
